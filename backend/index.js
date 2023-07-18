@@ -5,6 +5,7 @@ require("dotenv").config();
 
 const app = express()
 app.use(cors())
+//this express.json is used to get the data from the fronted in json  parsed format
 app.use(express.json())
 
 app.get("/",(res,req)=>{
