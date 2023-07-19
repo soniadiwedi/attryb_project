@@ -15,7 +15,7 @@ export const ModalInventory = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     return (
       <>
-        <Button onClick={onOpen}>Add Your Inventories</Button>
+        <Button onClick={onOpen} backgroundColor={"orange.200"}>Add Your Inventories</Button>
   
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />

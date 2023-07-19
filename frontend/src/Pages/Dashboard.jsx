@@ -17,8 +17,8 @@ export const Dashboard = () => {
         <AddNewCar/>
         
        {/* getting all oem */}
-        <Oem />
         <ModalInventory/>
+        <Oem />
       <InventoryCard/>
     </Box>
   );
