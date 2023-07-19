@@ -64,7 +64,7 @@ export const loginFun = (email, password) => async (dispatch) => {
   dispatch(loginRequest());
   try {
     const response = await axios.post(
-      "https://frightened-flannel-shirt-ox.cyclic.app/user/login",
+      "http://localhost:5000/user/login",
       {
         email,
         password,

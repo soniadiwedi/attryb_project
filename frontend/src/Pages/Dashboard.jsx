@@ -5,6 +5,7 @@ import { AddNewCar } from './AddNewCar';
 import { Oem } from './Oem';
 import AddInventoryForm from './AddInventoryForm';
 import { ModalInventory } from './ModalInventory';
+import { InventoryCard } from './InventoryCard';
 
 
 export const Dashboard = () => {
@@ -18,7 +19,7 @@ export const Dashboard = () => {
        {/* getting all oem */}
         <Oem />
         <ModalInventory/>
-      
+      <InventoryCard/>
     </Box>
   );
 };
