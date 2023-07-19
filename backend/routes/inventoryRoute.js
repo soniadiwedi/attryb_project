@@ -40,7 +40,7 @@ inventoryRouter.post('/add', async (req, res) => {
   }
 });
 
-
+// http://localhost:5000/inventory?mileage=200
 inventoryRouter.get('/', async (req, res) => {
     const { listPrice, color, mileage, userId } = req.query;
     try {
@@ -70,8 +70,8 @@ inventoryRouter.get('/', async (req, res) => {
     }
   });
 
-
-inventoryRouter.delete('/:id', async (req, res) => {
+// 
+inventoryRouter.delete('/delete/:id', async (req, res) => {
   try {
     const { id } = req.params;
     await InventoryModel.findByIdAndDelete(id);
@@ -81,8 +81,8 @@ inventoryRouter.delete('/:id', async (req, res) => {
   }
 });
 
-
-inventoryRouter.put('/:id', async (req, res) => {
+// http://localhost:5000/inventory/edit/64b773a8d1ddf08c3af73785
+inventoryRouter.patch('/edit/:id', async (req, res) => {
   try {
     const { id } = req.params;
     const {
