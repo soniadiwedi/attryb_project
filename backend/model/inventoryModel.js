@@ -1,26 +1,23 @@
-const mongoose = require("mongoose");
-const { oemSpecsModel } = require("./oemSpecsModel.js");
-const { UserModel } = require("./userModel.js");
+const mongoose = require('mongoose');
+const oemSpecsModel = require('./oemSpecModel');
+// const oemSpecsModel = require('./OemSpecs')
+const {UsersModel}=require("./userModel")
 
-//this is the inventory model Schema which states that all the keys of inventory document will not more than 
-//thsese given keys and of specific types mentioned also
 
-const inventoryModelSchema = mongoose.Schema({
-  km: { type: Number, required: true },
-  majorScratches: { required: true, type: String },
-  price: { required: true, type: Number },
-  orginalPaint: { required: true, type: String },
-  accidents: { required: true, type: Number },
-  prevBuyers: { required: true, type: Number },
-  registrationPlace: { required: true, type: String },
+const inventorySchema = new mongoose.Schema({
+  carModel: String,
+  odometerKMs: Number,
+  majorScratches: Boolean,
+  originalPaint: Boolean,
+  accidentsReported: Number,
+  previousBuyers: Number,
+  registrationPlace: String,
+  image: String,
+  des:Array,
   oemId: { type: mongoose.Schema.Types.ObjectId, ref: oemSpecsModel },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: UserModel },
-  img: { type: String, required: true },
-  title: { type: String, required: true },
-  des:{type:Array,required:true}
-  
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: UsersModel},
 });
 
-const InventoryModel = mongoose.model("inventory", inventoryModelSchema);
+const InventoryModel = mongoose.model('Inventory', inventorySchema);
 
-module.exports = { InventoryModel };
+module.exports = InventoryModel;

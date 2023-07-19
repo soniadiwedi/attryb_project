@@ -1,16 +1,15 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const oemSpecsModelSchema = mongoose.Schema({
-  nameOfModel: { required: true, type: String },
-  yearOfModel: { required: true, type: String },
-  newPriceOfVehicle: { required: true, type: Number },
-  colors: { required: true, type: Array },
-  mileage: { required: true, type: Number },
-  power: { required: true, type: Number },
-  maxSpeed: { required: true, type: Number },
-  img:{required:true,type:String}
+const oemSpecsSchema = new mongoose.Schema({
+  model: String,
+  year: Number,
+  listPrice: Number,
+  colors: [String],
+  mileage: Number,
+  power: Number,
+  maxSpeed: Number,
 });
 
-const oemSpecsModel = mongoose.model("oemspecs", oemSpecsModelSchema);
+const oemSpecsModel = mongoose.model('oempec', oemSpecsSchema);
 
-module.exports = { oemSpecsModel };
+module.exports = oemSpecsModel;

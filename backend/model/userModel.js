@@ -1,16 +1,19 @@
-const mongoose = require("mongoose");
+const mongoose= require("mongoose");
 
-//this is the user  model Schema which states that all the keys of user  document will not more than 
-//these given keys and of specific types mentioned also
+const usersSchema= mongoose.Schema({
+        name:{type:String,required:true},
+        email:{type:String,required:true},
+        role:{type:String,required:true,enum:["Dealer","Customer"]},
+        password:{type:String,required:true},  
+        location:{type:String,required:true},
+},{
+    versionKey:false
+})
 
-const userModelSchema = mongoose.Schema({
-  name: { type: String, required: true },
-  email: { required: true, type: String },
-  dob: { reqired: true, type: Date },
-  password: { required: true, type: String },
- 
-});
 
-const UserModel = mongoose.model("user", userModelSchema);
+const UsersModel=mongoose.model("user",usersSchema);
 
-module.exports = { UserModel };
+
+module.exports={
+    UsersModel
+}
