@@ -24,7 +24,10 @@ export const Navbar = () => {
             Dream car
           </Text>
         </Link>
+        <Box ml={'32%'}>
+
         <Search/>
+        </Box>
         {/* Spacer to push elements to the right */}
         <Spacer />
 
