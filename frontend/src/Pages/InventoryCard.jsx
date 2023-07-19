@@ -1,4 +1,4 @@
-import { Box, Center, Flex, Image, Spinner, Text, Menu, MenuButton, MenuList, MenuItem, IconButton, VStack, HStack, Spacer, Button } from '@chakra-ui/react';
+import { Box, Center, Flex, Image, Spinner, Text, Menu, MenuButton, MenuList, MenuItem, IconButton, VStack, HStack, Spacer, Button, Grid } from '@chakra-ui/react';
 import { HamburgerIcon, EditIcon, DeleteIcon } from '@chakra-ui/icons';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -62,7 +62,11 @@ export const InventoryCard = () => {
   
 
   return (
-    <Flex flexWrap="wrap" justifyContent="center">
+
+    <Grid templateColumns="repeat(3, 1fr)"
+    ml='10%'
+    gap={6} // Add some gap between the cards
+    justifyContent="center">
       {loading ? (
         // If loading is true, show a loading spinner
         <Spinner size="xl" />
@@ -121,6 +125,6 @@ export const InventoryCard = () => {
           car={selectedCar}
         />
       )}
-    </Flex>
+    </Grid>
   );
 };

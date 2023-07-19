@@ -11,6 +11,7 @@ import {
   FormLabel,
   Input,
   Select,
+  Box,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -80,7 +81,7 @@ export const AddNewCar = () => {
   };
 
   return (
-    <>
+    <Box mb="5" mt='5'>
       <Button onClick={onOpen} backgroundColor={"orange.200"}>Add New Car</Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -168,6 +169,6 @@ export const AddNewCar = () => {
           
         </ModalContent>
       </Modal>
-    </>
+    </Box>
   );
 };
