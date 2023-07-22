@@ -10,154 +10,156 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Select,
+  
   Box,
 } from "@chakra-ui/react";
 import axios from "axios";
 
 import { useState } from "react";
-import { useToast } from '@chakra-ui/react'
-
+import { useToast } from "@chakra-ui/react";
+import Select from "react-select";
 export const AddNewCar = () => {
-
-   const[model,setmodel]=useState('')
-   const[year, setyear ]=useState("")
-   const[listprice , setListPrice] = useState("");
-   const[color,setcolor]=useState([])
-   const[mileage,setmileage]=useState('')
-   const[power,setpower]=useState('')
-   const[maxSpeed,setmaxspeed]=useState('')
+  const [nameOfModel, setnameOfModel] = useState("");
+  const [yearOfModel, setyearOfModel] = useState("");
+  const [newPriceOfVehicle, setnewPriceOfVehicle] = useState(0);
+  const [colors, setcolor] = useState([]);
+  const [mileage, setmileage] = useState(0);
+  const [power, setpower] = useState(0);
+  const [maxSpeed, setmaxspeed] = useState(0);
   const { isOpen, onOpen, onClose } = useDisclosure();
-    const toast=useToast()
+  const toast = useToast();
 
-  const handleColorChange = (e) => {
-    const selectedColors = Array.from(e.target.selectedOptions, (option) => option.value);
-    setcolor(selectedColors);
-  }
-  const handleSubmit = async(e) => {
+  const optionList = [
+    { value: "red", label: "Red" },
+    { value: "green", label: "Green" },
+    { value: "yellow", label: "Yellow" },
+    { value: "blue", label: "Blue" },
+    { value: "white", label: "White" },
+  ];
+
+  console.log("color", colors);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("hii");
-  
     const formData = {
-      model: model,
-      year: year,
-      listPrice: listprice,
-      colors: color,
+      nameOfModel: nameOfModel,
+      yearOfModel: yearOfModel,
+      newPriceOfVehicle: newPriceOfVehicle,
+      colors: colors,
       mileage: mileage,
       power: power,
       maxSpeed: maxSpeed,
     };
-  
-    
-      // Get the token from localStorage
-      let token = JSON.parse(localStorage.getItem("token"));
-      console.log("token", token);
-  
-      try{
-        let res= await axios.post(`https://frightened-flannel-shirt-ox.cyclic.app/oem/add`,formData,{
-         headers: {
-           Authorization: `Bearer ${token}`,
-         },
-        })
-         
-        console.log(res)
-        toast({
-            title: 'Account created.',
-            description: res.data.msg,
-            status: 'success',
-            duration: 5000,
-            isClosable: true,
-          })
-          setmodel('');
-          setyear('');
-          setListPrice('');
-          setcolor([]);
-          setmileage('');
-          setpower('');
-          setmaxspeed('');
-        }catch(err){
-           console.log(err)
-        } 
+    console.log(formData);
+    // Get the token from localStorage
+    let token = JSON.parse(localStorage.getItem("token"));
+    console.log("token", token);
+
+    try {
+      let res = await axios.post(`http://localhost:5000/oem/add`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log(res);
+      toast({
+        title: "Account created.",
+        description: res.data.msg,
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+      setnameOfModel("");
+      setyearOfModel("");
+      setnewPriceOfVehicle("");
+      setcolor([]);
+      setmileage(0);
+      setpower(0);
+      setmaxspeed(0);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
-    <Box mb="5" mt='5'>
-      <Button onClick={onOpen} backgroundColor={"orange.200"}>Add New Car</Button>
+    <Box mb="5" mt="5">
+      <Button onClick={onOpen} backgroundColor={"orange.200"}>
+        Add New Car
+      </Button>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>
+          <ModalHeader backgroundColor="yellow">
             Original Equipment Manufacturers Specifications
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <form onSubmit={handleSubmit}>
+            <form
+              onSubmit={
+                handleSubmit
+             }
+            >
               <FormControl mb={4}>
                 <FormLabel>Model</FormLabel>
                 <Input
                   type="text"
-                 
-                  value={model}
-                  onChange={(e)=>setmodel(e.target.value)}
+                  value={nameOfModel}
+                  onChange={(e) => setnameOfModel(e.target.value)}
                   required
                 />
               </FormControl>
               <FormControl mb={4}>
                 <FormLabel>Year</FormLabel>
                 <Input
-                 type="number"
-                  value={year}
-                  onChange={(e)=>setyear(e.target.value)}
+                  type="text"
+                  value={yearOfModel}
+                  onChange={(e) => setyearOfModel(e.target.value)}
                 />
-              
-              
               </FormControl>
               <FormControl mb={4}>
                 <FormLabel>List Price</FormLabel>
-               
+
                 <Input
-                 type="number"
-                  value={listprice}
-                  onChange={(e)=>setListPrice(e.target.value)}
+                  type="number"
+                  value={newPriceOfVehicle}
+                  onChange={(e) => setnewPriceOfVehicle(e.target.value)}
                 />
               </FormControl>
               <FormControl mb={4}>
                 <FormLabel>Colors</FormLabel>
                 <Select
-
-                  value={color}
-                  onChange={handleColorChange} // Use the handleColorChange function
-                  required
-                >
-                  <option value="Red">Red</option>
-                  <option value="Blue">Blue</option>
-                  <option value="Green">Green</option>
-                  {/* Add more color options as needed */}
-                </Select>
+                  options={optionList}
+                  placeholder="Select color"
+                  value={colors}
+                  onChange={setcolor}
+                  isSearchable={true}
+                  isMulti
+                />
               </FormControl>
               <FormControl mb={4}>
                 <FormLabel>Mileage</FormLabel>
                 <Input
-                 type="number"
+                  type="number"
                   value={mileage}
-                  onChange={(e)=>setmileage(e.target.value)}
+                  onChange={(e) => setmileage(e.target.value)}
                 />
               </FormControl>
               <FormControl mb={4}>
                 <FormLabel>Power</FormLabel>
                 <Input
-                 type="number"
+                  type="number"
                   value={power}
-                  onChange={(e)=>setpower(e.target.value)}
+                  onChange={(e) => setpower(e.target.value)}
                 />
               </FormControl>
               <FormControl mb={4}>
                 <FormLabel>Max Speed</FormLabel>
                 <Input
-                 type="number"
+                  type="number"
                   value={maxSpeed}
-                  onChange={(e)=>setmaxspeed(e.target.value)}
+                  onChange={(e) => setmaxspeed(e.target.value)}
                 />
               </FormControl>
               <Button colorScheme="orange" type="submit" w="100%">
@@ -165,8 +167,6 @@ export const AddNewCar = () => {
               </Button>
             </form>
           </ModalBody>
-
-          
         </ModalContent>
       </Modal>
     </Box>

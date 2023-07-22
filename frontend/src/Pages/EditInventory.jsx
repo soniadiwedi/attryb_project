@@ -17,7 +17,7 @@ import {
 import axios from "axios";
 import { useState } from "react";
 
-export const EditInventory = ({ car, isOpen, onClose }) => {
+export const EditInventory = ({ car, isOpen, onClose, onUpdate }) => {
   const [carModel, setcarModel] = useState(car.carModel||"");
   const [odometerKMs, setodometerKMs] = useState(car.odometerKMs||"");
   const [majorScratches, setmajorScratches] = useState(car.majorScratches||0);
@@ -78,7 +78,6 @@ export const EditInventory = ({ car, isOpen, onClose }) => {
       return;
     }
   };
-  console.log("Car", car);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -95,7 +94,7 @@ export const EditInventory = ({ car, isOpen, onClose }) => {
     let token = JSON.parse(localStorage.getItem("token"));
     axios
       .patch(
-        `https://frightened-flannel-shirt-ox.cyclic.app/inventory/edit/${car._id}`,
+        `http://localhost:5000/inventory/edit/${car._id}`,
         payload,
         {
           headers: {
@@ -104,7 +103,16 @@ export const EditInventory = ({ car, isOpen, onClose }) => {
         }
       )
       .then((res) => {
-        console.log(res.data);
+        // Call the onUpdate callback with the updated car data
+        onUpdate(res.data.updatedInventory); // Assuming the response data contains the updated car object
+        console.log("edit",res.data);
+        toast({
+          title: res.data.msg,
+          status: 'success',
+          duration: 4000, // Display the toast for 4 seconds
+          isClosable: true,
+          position: 'bottom',
+        });
       })
       .catch((err) => {
         console.log(err);

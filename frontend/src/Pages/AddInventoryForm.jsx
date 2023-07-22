@@ -14,17 +14,20 @@ import {
 import axios from 'axios';
 
 const AddInventoryForm = () => {
-  const [carModel, setcarModel] = useState('');
-  const [odometerKMs, setodometerKMs] = useState('');
+  
+  const [km, setkm] = useState(0);
   const [majorScratches, setmajorScratches] = useState(0);
-  const [originalPaint, setoriginalPaint] = useState(0);
-  const [accidentsReported, setaccidentsReported] = useState('');
-  const[previousBuyers,setpreviousBuyers]=useState('')
+  const[price,setprice]=useState(0)
+  const [orginalPaint, setorginalPaint] = useState("");
+  const [accidents, setaccidents] = useState(0);
+  const[prevBuyers,setprevBuyers]=useState(0)
   const[registrationPlace,setregistrationPlace]=useState('')
   const [image,setimage]=useState('')
   const[des,setdes]=useState([])
+  const[title,settitle]=useState("")
   const[loading,setloading]=useState(false)
- 
+  const[oemId,setoemId]=useState("")
+  const[userId,setuserId]=useState('')
   const toast = useToast();
   // for Image
   const hanleImage=(pic)=>{
@@ -76,12 +79,23 @@ const AddInventoryForm = () => {
     e.preventDefault();
 
     const newInventoryItem = {
-     
+     km,
+     majorScratches,
+     price,
+     orginalPaint,
+     accidents,
+      prevBuyers,
+      registrationPlace,
+      image,
+      title,
+      oemId,
+      userId
     };
 
+    let userid = JSON.parse(localStorage.getItem("uid"))
     try {
       const response = await axios.post(
-        'https://frightened-flannel-shirt-ox.cyclic.app/inventory/add',
+        'http://localhost:5000/inventory/add',
         newInventoryItem
       );
 
@@ -95,12 +109,12 @@ const AddInventoryForm = () => {
       });
 
       // Reset the form fields after successful submission
-      carModel('')
-      odometerKMs('')
+      title('')
+      km('')
       majorScratches('')
-      originalPaint('')
-      accidentsReported('')
-      previousBuyers('')
+      orginalPaint('')
+      accidents('')
+      prevBuyers('')
       image('')
       des('')
     } catch (error) {
@@ -122,17 +136,17 @@ const AddInventoryForm = () => {
         <FormLabel>Car Model</FormLabel>
         <Input
           type="text"
-          value={carModel}
-          onChange={(e) => setcarModel(e.target.value)}
+          value={title}
+          onChange={(e) => settitle(e.target.value)}
           required
         />
       </FormControl>
       <FormControl mb={4}>
-        <FormLabel>Odo Meters</FormLabel>
+        <FormLabel>Kilo Meters</FormLabel>
         <Input
           type="number"
-          value={odometerKMs}
-          onChange={(e) => setodometerKMs(e.target.value)}
+          value={km}
+          onChange={(e) => setkm(e.target.value)}
           required
         />
       </FormControl>
@@ -149,8 +163,8 @@ const AddInventoryForm = () => {
         <FormLabel>Original Paint</FormLabel>
         <Input
           type="text"
-          value={originalPaint}
-          onChange={(e) => setoriginalPaint(e.target.value)}
+          value={orginalPaint}
+          onChange={(e) => setorginalPaint(e.target.value)}
           required
         />
       </FormControl>
@@ -158,8 +172,8 @@ const AddInventoryForm = () => {
         <FormLabel>Accident Reported</FormLabel>
         <Input
           type="number"
-          value={accidentsReported}
-          onChange={(e) => setaccidentsReported(e.target.value)}
+          value={accidents}
+          onChange={(e) => setaccidents(e.target.value)}
           required
         />
       </FormControl>
@@ -167,8 +181,8 @@ const AddInventoryForm = () => {
         <FormLabel>Previous Buyers</FormLabel>
         <Input
           type="number"
-          value={previousBuyers}
-          onChange={(e) => setpreviousBuyers(e.target.value)}
+          value={prevBuyers}
+          onChange={(e) => setprevBuyers(e.target.value)}
           required
         />
       </FormControl>

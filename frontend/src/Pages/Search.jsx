@@ -20,7 +20,7 @@ export const Search = () => {
       }
   
       const response = await axios.get(
-        `https://frightened-flannel-shirt-ox.cyclic.app/oem/search?${searchQuery}`
+        `http://localhost:5000/oem/search?${searchQuery}`
       );
   
       console.log('Response data:', response.data);

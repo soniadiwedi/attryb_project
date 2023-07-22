@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react';
+import { Box, Circle } from '@chakra-ui/react';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
@@ -11,7 +11,7 @@ export const Oem = () => {
 
   const getCount = () => {
     axios
-      .get(`https://frightened-flannel-shirt-ox.cyclic.app/oem/count`)
+      .get(`http://localhost:5000/oem/count`)
       .then((res) => {
         console.log(res.data.count);
         setCars(res.data.count);
@@ -23,7 +23,10 @@ export const Oem = () => {
 
   return (
     <Box>
+      <Circle bg='green.300' w='500px'>
+
       {car !== null ? <h1>{`Original Equipment Manufacturers: ${car}`}</h1> : <h1>Loading...</h1>}
+      </Circle>
     </Box>
   );
 };
